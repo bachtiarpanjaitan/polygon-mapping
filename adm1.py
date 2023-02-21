@@ -23,7 +23,7 @@ for i,item in enumerate(data['features']):
     prop['coordinates'] = {
         "type": 'Feature',
         "properties": {},
-        "geometry": data_pol['geometries'][i]
+        "geometry": json.dumps(data_pol['geometries'][i])
     }
     temp_data.append(prop)
 

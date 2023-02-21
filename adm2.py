@@ -21,11 +21,11 @@ for i,item in enumerate(data['features']):
         "adm1_code": item['properties']['ADM1_PCODE'],
         "id":None
     }
-    prop['coordinates'] = json.dumps({
+    prop['coordinates'] = {
         "type": 'Feature',
         "properties": {},
-        "geometry": data_pol['geometries'][i]
-    })
+        "geometry": json.dumps(data_pol['geometries'][i])
+    }
     temp_data.append(prop)
 
 json_string = json.dumps(temp_data)
