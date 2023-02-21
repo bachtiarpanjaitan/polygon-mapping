@@ -1,2 +1,5 @@
 *.json
 /output/*.json
+/lib
+/bin
+/.conda

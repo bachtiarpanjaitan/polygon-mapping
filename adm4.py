@@ -1,4 +1,5 @@
 import json
+from shapely.geometry import shape
 
 file_adm = open('adm4-db.json')
 file_pol = open('adm4-polygon.json')
@@ -10,6 +11,9 @@ data_pol = json.load(file_pol)
 temp_data = []
 
 for i,item in enumerate(data['features']):
+    center = shape(data_pol['geometries'][i]).centroid
+    y = center.y
+    x = center.x
     prop = {
         "shape_leng": item['properties']['Shape_Leng'],
         "shape_area": item['properties']['Shape_Area'],
@@ -23,12 +27,19 @@ for i,item in enumerate(data['features']):
         "adm2_code": item['properties']['ADM2_PCODE'],
         "adm3": item['properties']['ADM3_EN'],
         "adm3_code": item['properties']['ADM3_PCODE'],
+        "x": x,
+        "y": y,
         "id":None
     }
     prop['coordinates'] = {
-        "type": 'Feature',
-        "properties": {},
-        "geometry": json.dumps(data_pol['geometries'][i])
+        "type": 'FeatureCollection',
+        'features': [
+            {
+                "type": 'Feature',
+                "properties": {},
+                "geometry": json.dumps(data_pol['geometries'][i])
+            }
+        ]
     }
     temp_data.append(prop)
 
